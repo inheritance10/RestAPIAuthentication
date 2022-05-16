@@ -42,7 +42,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        return Product::find($id);
     }
 
     /**
@@ -54,8 +54,12 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+        $product->update($request->all());
+
+        return $product;
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -65,6 +69,23 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+
+        if($product->delete()){
+            return 'delete successfully';
+        }
+
+        return 'delete unsuccessfully';
+    }
+
+    /**
+     * Search for a name
+     *composer require laravel/sanctum
+     * @param  str  $name
+     * @return \Illuminate\Http\Response
+     */
+    public function search($name)
+    {
+        return Product::where('name' , 'like','%'.$name.'%')->get();
     }
 }

@@ -17,6 +17,8 @@ use App\Http\Controllers\ProductController;
 
 
 Route::apiResource('products', ProductController::class);
+Route::get('/products/search/{name}',[ProductController::class,'search']);
+
 
 /*Route::post('products',function (){
      $product = Product::insert([

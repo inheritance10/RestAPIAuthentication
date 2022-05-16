@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Product;
+use App\Http\Controllers\ProductController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,11 +16,9 @@ use App\Models\Product;
 */
 
 
-Route::get('products', function (){
-    return Product::all();
-});
+Route::apiResource('products', ProductController::class);
 
-Route::post('products',function (){
+/*Route::post('products',function (){
      $product = Product::insert([
          [
              'name' => 'product two',
@@ -88,12 +87,26 @@ Route::put('products/{id}',function ($id){
        ]);
 
        if($products){
-           return 'Api test kayıt güncelleme başarılı';
+           return 'Api test record update successfully';
        }
 
-       return 'Api test kayıt güncelleme başarısız';
+       return 'Api test record update unsuccessfully';
    }
 });
+
+Route::delete('products/{id}' ,function ($id){
+   if(Product::find($id) == null){
+       return 'The record to be deleted does not already exist in the database';
+   }else{
+       $products = Product::find($id);
+
+       if($products->delete()){
+           return 'Api test record delete successfully';
+       }
+
+       return 'Api test record delete unsuccessfully';
+   }
+});*/
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
